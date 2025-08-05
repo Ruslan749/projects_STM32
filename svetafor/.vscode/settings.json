@@ -1,0 +1,15 @@
+{
+    "cSpell.words": [
+        "Calibration",
+        "GPIOA",
+        "GPIOB",
+        "HSICALIBRATION",
+        "Oscillator",
+        "OSCILLATORTYPE",
+        "PLLMUL",
+        "PLLSOURCE"
+    ],
+    "files.associations": {
+        "stm32f1xx_hal.h": "c"
+    }
+}

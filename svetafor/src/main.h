@@ -1,19 +1,30 @@
-
 #include "pinMode.h"
 #include <stdbool.h>
+
+// Определение enum с режимами работы
+typedef enum
+{
+    MODE_AUTO, // Автоматический режим
+    MODE_MNT   // Ручной режим
+} SystemMode;
 
 // Прототипы функций
 void SystemClock_Config(void);
 void Error_Handler(void);
-void PIN_2_INIT(void);
-void PIN_RED(void);
-void PIN_BLUE(void);
-void PIN_YELLOW(void);
+void PIN_LED(void);
+void PIN_BUTTON(void);
 
-void setupSvetafor(void); // функция для включения режима светофора
+void setupTrafficLightAUTO(void); // функция для автоматического включения режима светофора
+void setupTrafficLightMNT(void);  // функция для ручного включения режима светофора
+void setupMode(void);             // функция обработки режима работы
 
-// прототипы переменных
+// глобальные переменные
 bool flag = true;
+bool pinUp = false;
+SystemMode currentMode = MODE_AUTO; // Текущий режим (по умолчанию EMPTY)
+uint32_t lastDebounceTime = 0;      // последнее время срабатывания кнопки
+
+const uint32_t debounceDelay = 50;  // время антидребезга в мс
 
 /**
  * @brief System Clock Configuration
@@ -61,6 +72,18 @@ void Error_Handler(void)
         HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_2);
         HAL_Delay(100);
     }
+}
+/**
+ * @brief Обработчики прерываний
+ */
+void EXTI3_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+}
+
+void EXTI4_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
 }
 
 // Обязательные обработчики прерываний
