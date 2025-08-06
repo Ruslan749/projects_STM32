@@ -17,8 +17,18 @@ int main(void)
         setupMode();
     }
 }
+
+void resetTrafficLightState(void)
+{
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+    pinUp = false;
+}
+
 void setupTrafficLightMNT(void)
 {
+    resetTrafficLightState();
     if (flag)
     {
         // Включение светодиода A0 (RED)
@@ -67,7 +77,7 @@ void setupTrafficLightMNT(void)
 }
 void setupTrafficLightAUTO(void)
 {
-
+    resetTrafficLightState();
     if (flag)
     {
         // Включение светодиода A0 (RED)
@@ -149,10 +159,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         {
             if (currentMode == MODE_MNT)
             {
-               pinUp = true;
+                pinUp = true;
             }
             currentMode = MODE_MNT; // Активируем режим MNT
-            
         }
     }
 }

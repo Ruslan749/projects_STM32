@@ -14,9 +14,10 @@ void Error_Handler(void);
 void PIN_LED(void);
 void PIN_BUTTON(void);
 
-void setupTrafficLightAUTO(void); // функция для автоматического включения режима светофора
-void setupTrafficLightMNT(void);  // функция для ручного включения режима светофора
-void setupMode(void);             // функция обработки режима работы
+void setupTrafficLightAUTO(void);  // функция для автоматического включения режима светофора
+void setupTrafficLightMNT(void);   // функция для ручного включения режима светофора
+void setupMode(void);              // функция обработки режима работы
+void resetTrafficLightState(void); // функция сброса состояния светодиодов
 
 // глобальные переменные
 bool flag = true;
@@ -24,7 +25,7 @@ bool pinUp = false;
 SystemMode currentMode = MODE_AUTO; // Текущий режим (по умолчанию EMPTY)
 uint32_t lastDebounceTime = 0;      // последнее время срабатывания кнопки
 
-const uint32_t debounceDelay = 50;  // время антидребезга в мс
+const uint32_t debounceDelay = 50; // время антидребезга в мс
 
 /**
  * @brief System Clock Configuration
